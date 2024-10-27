@@ -9,19 +9,19 @@ editor_options:
 ```{r, include=FALSE}
 library(plotly)
 
-plot1 <- readRDS("web_files/ev_distribution.RDS")
-plot2 <- readRDS("web_files/candidate_distributions.RDS")
+plot1 <- readRDS("web_files/electoral_map.RDS")
+plot2 <- readRDS("web_files/state_voting.RDS")
 ```
 
 ::: panel-tabset
 
-## Overall distribution
+## Electoral map
 
 ```{r, echo=FALSE}
 plot1
 ```
 
-## Candidate distributions
+## State vote-shares
 
 ```{r, echo=FALSE}
 plot2

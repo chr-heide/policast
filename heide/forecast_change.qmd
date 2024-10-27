@@ -9,21 +9,28 @@ editor_options:
 ```{r, include=FALSE}
 library(plotly)
 
-plot1 <- readRDS("web_files/ev_distribution.RDS")
-plot2 <- readRDS("web_files/candidate_distributions.RDS")
+plot1 <- readRDS("web_files/time_win_prob.RDS")
+plot2 <- readRDS("web_files/time_ec_votes.RDS")
+plot3 <- readRDS("web_files/time_pop_vote.RDS")
 ```
 
 ::: panel-tabset
 
-## Overall distribution
+## Win probability
 
 ```{r, echo=FALSE}
 plot1
 ```
 
-## Candidate distributions
+## EC votes
 
 ```{r, echo=FALSE}
 plot2
+```
+
+## Popular vote
+
+```{r, echo=FALSE}
+plot3
 ```
 :::
