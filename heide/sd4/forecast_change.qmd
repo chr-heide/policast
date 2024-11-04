@@ -1,0 +1,36 @@
+---
+output:
+  html_document:
+    self_contained: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include=FALSE}
+library(plotly)
+
+plot1 <- readRDS("web_files/time_win_prob.RDS")
+plot2 <- readRDS("web_files/time_ec_votes.RDS")
+plot3 <- readRDS("web_files/time_pop_vote.RDS")
+```
+
+::: panel-tabset
+
+## Win probability
+
+```{r, echo=FALSE}
+plot1
+```
+
+## EC votes
+
+```{r, echo=FALSE}
+plot2
+```
+
+## Popular vote
+
+```{r, echo=FALSE}
+plot3
+```
+:::

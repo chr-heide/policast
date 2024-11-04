@@ -1,0 +1,66 @@
+---
+output:
+  html_document:
+    self_contained: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include=FALSE}
+library(plotly)
+library(tidyverse)
+library(DT)
+
+plot1 <- readRDS("web_files/tipping_point_probabilities.RDS")
+winner_df <- readRDS("web_files/swing_state_scenarios.RDS")
+plot3 <- readRDS("web_files/calling_swing_states.RDS")
+```
+
+::: panel-tabset
+
+## Likely tipping points
+
+```{r, echo=FALSE}
+plot1
+```
+
+## Svingstat scenarier
+
+```{r, echo=FALSE}
+winner_df |> 
+  group_by(AZ, WI, MI, PA, NC, GA, NV) |> 
+  summarise(
+    `Scenario probability` = n() / nrow(winner_df),
+    `Median Harris EVs` = median(dem_ev),
+    `Probability Harris win` = round(mean(harris_win), 2),
+    .groups = "keep") |> 
+  arrange(desc(`Scenario probability`)) |> 
+  mutate(
+    `Scenario probability` = round(`Scenario probability`, 2),
+    `Scenario probability` = case_when(
+      `Scenario probability` == 1 ~ "0.99",
+      `Scenario probability` == 0 ~ "0.01",
+      .default = as.character(`Scenario probability`)),
+    `Probability Harris win` = case_when(
+      `Probability Harris win` == 1 ~ "0.99",
+      `Probability Harris win` == 0 ~ "0.01",
+      .default = as.character(`Probability Harris win`)),
+    `Median Harris EVs` = as.character(`Median Harris EVs`)) |> 
+  DT::datatable(
+    filter = "none",
+    rownames = FALSE,
+    fillContainer = FALSE) |> 
+  formatStyle(
+    columns = c("AZ", "WI", "MI", "PA", "NC", "GA", "NV"),
+    backgroundColor = styleEqual(
+      c("Rep", "Dem"),
+      values = c('#E40A04', '#3A4EB1')))
+```
+
+## Kald en svingstat
+
+```{r, echo=FALSE}
+plot3
+```
+
+:::
