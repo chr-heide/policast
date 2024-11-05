@@ -30,21 +30,22 @@ plot1
 winner_df |> 
   group_by(AZ, WI, MI, PA, NC, GA, NV) |> 
   summarise(
-    `Scenario probability` = n() / nrow(winner_df),
+    `Scenario probability (%)` = n() / nrow(winner_df),
     `Median Harris EVs` = median(dem_ev),
-    `Probability Harris win` = round(mean(harris_win), 2),
+    `Probability Harris win (%)` = mean(harris_win),
     .groups = "keep") |> 
-  arrange(desc(`Scenario probability`)) |> 
+  arrange(desc(`Scenario probability (%)`)) |> 
   mutate(
-    `Scenario probability` = round(`Scenario probability`, 2),
-    `Scenario probability` = case_when(
-      `Scenario probability` == 1 ~ "0.99",
-      `Scenario probability` == 0 ~ "0.01",
-      .default = as.character(`Scenario probability`)),
-    `Probability Harris win` = case_when(
-      `Probability Harris win` == 1 ~ "0.99",
-      `Probability Harris win` == 0 ~ "0.01",
-      .default = as.character(`Probability Harris win`)),
+    `Scenario probability (%)` = round(`Scenario probability (%)`*100, 2),
+    `Scenario probability (%)` = case_when(
+      `Scenario probability (%)` == 1 ~ "99.99",
+      `Scenario probability (%)` == 0 ~ "0.01",
+      .default = as.character(`Scenario probability (%)`)),
+    `Probability Harris win (%)` = round(`Probability Harris win (%)`*100, 2),
+    `Probability Harris win (%)` = case_when(
+      `Probability Harris win (%)` == 100 ~ "99.99",
+      `Probability Harris win (%)` == 0 ~ "0.01",
+      .default = as.character(`Probability Harris win (%)`)),
     `Median Harris EVs` = as.character(`Median Harris EVs`)) |> 
   DT::datatable(
     filter = "none",
